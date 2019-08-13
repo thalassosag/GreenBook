@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.green.mapper.UserRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.green.pojo.UserRelation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="interest_id" property="interestId" jdbcType="VARCHAR" />
+    <result column="follower_id" property="followerId" jdbcType="VARCHAR" />
+    <result column="history_product_id" property="historyProductId" jdbcType="VARCHAR" />
+    <result column="history_article_id" property="historyArticleId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, interest_id, follower_id, history_product_id, history_article_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.green.pojo.UserRelationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.green.pojo.UserRelationExample" >
+    delete from user_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.green.pojo.UserRelation" >
+    insert into user_relation (id, user_id, interest_id, 
+      follower_id, history_product_id, history_article_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{interestId,jdbcType=VARCHAR}, 
+      #{followerId,jdbcType=VARCHAR}, #{historyProductId,jdbcType=VARCHAR}, #{historyArticleId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.green.pojo.UserRelation" >
+    insert into user_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="interestId != null" >
+        interest_id,
+      </if>
+      <if test="followerId != null" >
+        follower_id,
+      </if>
+      <if test="historyProductId != null" >
+        history_product_id,
+      </if>
+      <if test="historyArticleId != null" >
+        history_article_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="interestId != null" >
+        #{interestId,jdbcType=VARCHAR},
+      </if>
+      <if test="followerId != null" >
+        #{followerId,jdbcType=VARCHAR},
+      </if>
+      <if test="historyProductId != null" >
+        #{historyProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="historyArticleId != null" >
+        #{historyArticleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.green.pojo.UserRelationExample" resultType="java.lang.Integer" >
+    select count(*) from user_relation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_relation
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interestId != null" >
+        interest_id = #{record.interestId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.followerId != null" >
+        follower_id = #{record.followerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.historyProductId != null" >
+        history_product_id = #{record.historyProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.historyArticleId != null" >
+        history_article_id = #{record.historyArticleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_relation
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      interest_id = #{record.interestId,jdbcType=VARCHAR},
+      follower_id = #{record.followerId,jdbcType=VARCHAR},
+      history_product_id = #{record.historyProductId,jdbcType=VARCHAR},
+      history_article_id = #{record.historyArticleId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.green.pojo.UserRelation" >
+    update user_relation
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="interestId != null" >
+        interest_id = #{interestId,jdbcType=VARCHAR},
+      </if>
+      <if test="followerId != null" >
+        follower_id = #{followerId,jdbcType=VARCHAR},
+      </if>
+      <if test="historyProductId != null" >
+        history_product_id = #{historyProductId,jdbcType=VARCHAR},
+      </if>
+      <if test="historyArticleId != null" >
+        history_article_id = #{historyArticleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.green.pojo.UserRelation" >
+    update user_relation
+    set user_id = #{userId,jdbcType=VARCHAR},
+      interest_id = #{interestId,jdbcType=VARCHAR},
+      follower_id = #{followerId,jdbcType=VARCHAR},
+      history_product_id = #{historyProductId,jdbcType=VARCHAR},
+      history_article_id = #{historyArticleId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
